@@ -27,7 +27,7 @@ extern "C" __declspec(dllexport) void InitializeASI() {
         Init();
 
     else
-        MessageBoxA(nullptr, "This .exe is not supported.\nPlease use v1.4 English nfsc.exe (6,88 MB (7.217.152 bytes)).", "NFSC Infinite Speedbreaker by Kevin4e", MB_ICONERROR);
+        MessageBoxA(nullptr, "This .exe is not supported.\nPlease use v1.4 English nfsc.exe (6,88 MB (7.217.152 bytes)).", "NFSC Infinite Nitrous by Kevin4e", MB_ICONERROR);
 }
 
 BOOL APIENTRY DllMain(HMODULE, DWORD, LPVOID)
