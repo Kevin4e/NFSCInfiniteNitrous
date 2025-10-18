@@ -3,8 +3,6 @@
 
 void Init()
 {
-	DWORD baseAddress = reinterpret_cast<DWORD>(GetModuleHandleA(nullptr));
-
     constexpr unsigned char patch[4] =
     {
         0xB0, 0x01, // mov al, 1
@@ -12,16 +10,14 @@ void Init()
         0x90        // nop
     };
 
-    std::memcpy(reinterpret_cast<void*>(baseAddress + 0xAAE8B), patch, 4);
+    std::memcpy(reinterpret_cast<void*>(0x4AAE8B), patch, 4);
 }
 
 extern "C" __declspec(dllexport) void InitializeASI() {
     // Check if .exe file is compatible - Thanks to thelink2012 and MWisBest
-    // Simplified condition for clarity; logic unchanged, there were a few redundant operations
+    // Optimizations and simplified condition for clarity; logic unchanged, there were a few redundant operations
 
-    uintptr_t base = (uintptr_t)GetModuleHandleA(nullptr);
-    IMAGE_DOS_HEADER* dos = (IMAGE_DOS_HEADER*)(base);
-    IMAGE_NT_HEADERS* nt = (IMAGE_NT_HEADERS*)(base + dos->e_lfanew);
+    IMAGE_NT_HEADERS* nt = reinterpret_cast<IMAGE_NT_HEADERS*>(0x400108);
 
     if (nt->OptionalHeader.AddressOfEntryPoint == 0x47E926)
         Init();
